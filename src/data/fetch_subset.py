@@ -78,7 +78,10 @@ def main():
     ap.add_argument("--out", default="data/raw/pilot")
     ap.add_argument("--workers", type=int, default=6)
     ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--caps", type=int, nargs=3, default=None, metavar=("TRAIN", "VAL", "TEST"),
+                    help="max recordings per species in each split (default 30 10 10)")
     args = ap.parse_args()
+    caps = dict(zip(SPLITS, args.caps)) if args.caps else CAPS
 
     meta = pd.read_csv(META)
     species = choose_species(meta, args.n_species, args.min_recordings)
@@ -92,7 +95,7 @@ def main():
         part["compress_mb"] = part.file_name.map(lambda f: directory[f].compress_size / 1e6)
         part = part[part.compress_mb <= args.max_mb]
         part = (part.sample(frac=1, random_state=args.seed)
-                    .groupby("species_name").head(CAPS[split]))
+                    .groupby("species_name").head(caps[split]))
         out_dir = Path(args.out) / split
         out_dir.mkdir(parents=True, exist_ok=True)
         for f in part.file_name:

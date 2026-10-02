@@ -1,0 +1,49 @@
+cnn_pilot: 1.18M params, 1509 train chunks, device=mps
+epoch   1  loss 2.424  val acc 0.125  val macro-F1 0.052  (60s)
+epoch   2  loss 2.206  val acc 0.108  val macro-F1 0.075  (109s)
+epoch   3  loss 1.937  val acc 0.400  val macro-F1 0.362  (136s)
+epoch   4  loss 1.597  val acc 0.567  val macro-F1 0.548  (162s)
+epoch   5  loss 1.503  val acc 0.517  val macro-F1 0.478  (191s)
+epoch   6  loss 1.312  val acc 0.533  val macro-F1 0.529  (231s)
+epoch   7  loss 1.171  val acc 0.683  val macro-F1 0.676  (274s)
+epoch   8  loss 1.111  val acc 0.508  val macro-F1 0.494  (313s)
+epoch   9  loss 1.103  val acc 0.625  val macro-F1 0.631  (349s)
+epoch  10  loss 0.923  val acc 0.633  val macro-F1 0.638  (387s)
+epoch  11  loss 0.963  val acc 0.742  val macro-F1 0.730  (423s)
+epoch  12  loss 0.891  val acc 0.642  val macro-F1 0.648  (460s)
+epoch  13  loss 0.938  val acc 0.750  val macro-F1 0.759  (496s)
+epoch  14  loss 0.666  val acc 0.667  val macro-F1 0.675  (531s)
+epoch  15  loss 0.688  val acc 0.775  val macro-F1 0.774  (564s)
+epoch  16  loss 0.712  val acc 0.758  val macro-F1 0.756  (602s)
+epoch  17  loss 0.666  val acc 0.733  val macro-F1 0.740  (641s)
+epoch  18  loss 0.685  val acc 0.783  val macro-F1 0.788  (678s)
+epoch  19  loss 0.608  val acc 0.775  val macro-F1 0.767  (716s)
+epoch  20  loss 0.633  val acc 0.825  val macro-F1 0.825  (752s)
+epoch  21  loss 0.642  val acc 0.775  val macro-F1 0.772  (789s)
+epoch  22  loss 0.700  val acc 0.817  val macro-F1 0.816  (825s)
+epoch  23  loss 0.580  val acc 0.833  val macro-F1 0.834  (861s)
+epoch  24  loss 0.537  val acc 0.833  val macro-F1 0.830  (894s)
+epoch  25  loss 0.683  val acc 0.808  val macro-F1 0.809  (927s)
+epoch  26  loss 0.543  val acc 0.833  val macro-F1 0.830  (961s)
+epoch  27  loss 0.669  val acc 0.817  val macro-F1 0.813  (995s)
+epoch  28  loss 0.509  val acc 0.825  val macro-F1 0.822  (1032s)
+epoch  29  loss 0.536  val acc 0.817  val macro-F1 0.814  (1067s)
+epoch  30  loss 0.420  val acc 0.833  val macro-F1 0.831  (1103s)
+{
+  "chunk": {
+    "accuracy": 0.8167701863354038,
+    "macro_precision": 0.8062687001385545,
+    "macro_recall": 0.8126962038127908,
+    "macro_f1": 0.8038901895746217,
+    "weighted_f1": 0.8150335797958282
+  },
+  "file": {
+    "accuracy": 0.825,
+    "macro_precision": 0.82739898989899,
+    "macro_recall": 0.8250000000000001,
+    "macro_f1": 0.8216311724051661,
+    "weighted_f1": 0.821631172405166
+  },
+  "n_chunks": 322,
+  "n_files": 120
+}

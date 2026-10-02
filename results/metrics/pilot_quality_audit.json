@@ -1,0 +1,10 @@
+{
+  "files": 600,
+  "failed_decodes": 0,
+  "shorter_than_5s_tiled": 63,
+  "min_s": 1.0,
+  "median_s": 12.4,
+  "max_s": 120.0,
+  "chunks": 2172,
+  "near_silent_chunks": 20
+}

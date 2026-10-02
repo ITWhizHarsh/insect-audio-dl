@@ -1,0 +1,20 @@
+{
+  "n_files": 20319,
+  "n_species": 141,
+  "files_per_split": {
+    "Train": 12166,
+    "Validation": 4083,
+    "Test": 4070
+  },
+  "files_in_multiple_splits": 0,
+  "observations_shared_across_splits": 1,
+  "shared_observation_files": 6,
+  "shared_observations": [
+    "https://doi.org/10.1093/database/bav054"
+  ],
+  "species_missing_a_split": 0,
+  "contributor_species_pairs": 6572,
+  "pairs_in_multiple_splits": 1710,
+  "validation_files_with_recordist_species_in_train": 0.7340191036002939,
+  "test_files_with_recordist_species_in_train": 0.7385749385749386
+}

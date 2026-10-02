@@ -1,0 +1,70 @@
+{
+  "files": 26297,
+  "species": 459,
+  "by_group": {
+    "Cicadidae": 149,
+    "Orthoptera": 310
+  },
+  "files_by_group": {
+    "Orthoptera": 14221,
+    "Cicadidae": 12076
+  },
+  "format": {
+    "mp3": 13265,
+    "wav": 13032
+  },
+  "split": {
+    "Train": 15788,
+    "Validation": 5290,
+    "Test": 5219
+  },
+  "recordings_per_species": {
+    "max": 896,
+    "median": 22.0,
+    "min": 10,
+    "gini": 0.608016869142607,
+    "top10pct_species_share_of_files": 0.5097159371791459
+  },
+  "thresholds": {
+    "10": {
+      "species": 459,
+      "files": 26297
+    },
+    "25": {
+      "species": 214,
+      "files": 22596
+    },
+    "40": {
+      "species": 141,
+      "files": 20319
+    },
+    "60": {
+      "species": 101,
+      "files": 18377
+    },
+    "100": {
+      "species": 60,
+      "files": 15119
+    }
+  },
+  "species_below_25": 245,
+  "temperature": {
+    "files_with_temperature": 4906,
+    "fraction": 0.1865612047001559,
+    "by_group": {
+      "Orthoptera": 4906
+    },
+    "species_with_any": 278,
+    "species_with_>=10": 185,
+    "range_c": [
+      3.5,
+      47.1
+    ],
+    "mean_c": 24.381059926620463,
+    "by_split": {
+      "Train": 2944,
+      "Validation": 994,
+      "Test": 968
+    }
+  }
+}

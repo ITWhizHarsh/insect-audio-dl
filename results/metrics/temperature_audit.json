@@ -1,0 +1,24 @@
+{
+  "temperature_values_raw": 4908,
+  "out_of_range_removed": [
+    60.0,
+    60.0
+  ],
+  "files_with_valid_temperature": 4906,
+  "orthoptera_files": 14221,
+  "orthoptera_coverage": 0.34498277195696503,
+  "recordists_with_any_temperature": 87,
+  "top1_recordist_share": 0.3481451284141867,
+  "top5_recordists_share": 0.9160211985324093,
+  "recordists_>=10_files": 127,
+  "of_which_all_or_nothing": 116,
+  "temperature_by_split": {
+    "Train": 2944,
+    "Validation": 994,
+    "Test": 968
+  },
+  "train_mean_c": 24.35438179347826,
+  "train_std_c": 4.487880136458625,
+  "species_with_temperature": 278,
+  "species_temperature_from_one_recordist": 78
+}

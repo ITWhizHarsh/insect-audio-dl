@@ -1,0 +1,44 @@
+crnn_pilot: 1.61M params, 1509 train chunks, device=mps
+epoch   1  loss 2.379  val acc 0.317  val macro-F1 0.222  (32s)
+epoch   2  loss 1.722  val acc 0.308  val macro-F1 0.243  (67s)
+epoch   3  loss 1.431  val acc 0.617  val macro-F1 0.607  (101s)
+epoch   4  loss 1.266  val acc 0.633  val macro-F1 0.621  (135s)
+epoch   5  loss 1.086  val acc 0.650  val macro-F1 0.651  (166s)
+epoch   6  loss 0.979  val acc 0.675  val macro-F1 0.676  (197s)
+epoch   7  loss 0.832  val acc 0.550  val macro-F1 0.553  (228s)
+epoch   8  loss 1.005  val acc 0.675  val macro-F1 0.662  (259s)
+epoch   9  loss 0.846  val acc 0.683  val macro-F1 0.684  (289s)
+epoch  10  loss 0.716  val acc 0.683  val macro-F1 0.679  (320s)
+epoch  11  loss 0.743  val acc 0.733  val macro-F1 0.719  (350s)
+epoch  12  loss 0.757  val acc 0.733  val macro-F1 0.722  (380s)
+epoch  13  loss 0.581  val acc 0.700  val macro-F1 0.690  (409s)
+epoch  14  loss 0.575  val acc 0.742  val macro-F1 0.735  (438s)
+epoch  15  loss 0.543  val acc 0.717  val macro-F1 0.713  (466s)
+epoch  16  loss 0.544  val acc 0.733  val macro-F1 0.727  (493s)
+epoch  17  loss 0.641  val acc 0.725  val macro-F1 0.718  (519s)
+epoch  18  loss 0.517  val acc 0.708  val macro-F1 0.705  (547s)
+epoch  19  loss 0.565  val acc 0.725  val macro-F1 0.719  (575s)
+epoch  20  loss 0.455  val acc 0.742  val macro-F1 0.737  (604s)
+epoch  21  loss 0.648  val acc 0.700  val macro-F1 0.696  (631s)
+epoch  22  loss 0.647  val acc 0.717  val macro-F1 0.710  (658s)
+epoch  23  loss 0.542  val acc 0.725  val macro-F1 0.720  (686s)
+epoch  24  loss 0.622  val acc 0.725  val macro-F1 0.720  (713s)
+epoch  25  loss 0.520  val acc 0.725  val macro-F1 0.721  (739s)
+{
+  "chunk": {
+    "accuracy": 0.7546583850931677,
+    "macro_precision": 0.7428271977544023,
+    "macro_recall": 0.744592520098803,
+    "macro_f1": 0.7355244294965612,
+    "weighted_f1": 0.7482375671863885
+  },
+  "file": {
+    "accuracy": 0.7416666666666667,
+    "macro_precision": 0.759583472083472,
+    "macro_recall": 0.7416666666666666,
+    "macro_f1": 0.7367978515516879,
+    "weighted_f1": 0.7367978515516879
+  },
+  "n_chunks": 322,
+  "n_files": 120
+}

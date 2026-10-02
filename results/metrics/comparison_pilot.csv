@@ -1,0 +1,4 @@
+model,params (M),best epoch,train time (s),val macro-F1,test acc (file),test macro-F1 (file),test macro-P,test macro-R,test acc (chunk),test macro-F1 (chunk)
+MLP (handcrafted),0.21,142,33.1,0.7897,0.775,0.7763,0.7983,0.775,0.764,0.7417
+CNN (log-mel),1.18,23,1107.4,0.8339,0.825,0.8216,0.8274,0.825,0.8168,0.8039
+CRNN (CNN + BiLSTM),1.61,20,743.2,0.7366,0.7417,0.7368,0.7596,0.7417,0.7547,0.7355

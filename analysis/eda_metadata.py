@@ -55,6 +55,32 @@ def long_tail(df, stats):
     stats["species_below_25"] = int((counts < 25).sum())
 
 
+def species_hours(readme=C.ROOT / "data/meta/Train_Val_Test_README.txt"):
+    """Per-species duration from the species table in the dataset README."""
+    import re
+    hours = {}
+    for line in open(readme):
+        m = re.match(r"^([A-Z][a-z]+ [a-z\-]+(?: [a-z\-]+)?)\s+\t?(\d+)\s*\t(\d+):(\d+):(\d+)", line)
+        if m:
+            h, mi, se = map(int, m.groups()[2:])
+            hours[m.group(1).replace(" ", "_")] = h + mi / 60 + se / 3600
+    return hours
+
+
+def threshold_table(df, stats):
+    """Working-subset candidates: species, files, hours and official split sizes per threshold."""
+    counts, hours = df.species_name.value_counts(), species_hours()
+    rows = []
+    for t in (10, 25, 40, 60, 100):
+        sp = counts[counts >= t].index
+        v = df[df.species_name.isin(sp)].subset.value_counts()
+        rows.append({"threshold": t, "species": int(len(sp)), "files": int(counts[sp].sum()),
+                     "hours": round(sum(hours.get(s, 0) for s in sp), 1),
+                     "train": int(v.Train), "val": int(v.Validation), "test": int(v.Test)})
+    stats["working_subset_table"] = rows
+    (C.RESULTS_DIR / "metrics" / "working_subset_thresholds.json").write_text(json.dumps(rows, indent=2))
+
+
 def gini(x):
     x = np.sort(np.asarray(x, dtype=float))
     n = len(x)
@@ -99,6 +125,7 @@ def main():
              "format": df.file_name.str.extract(r"\.(\w+)$")[0].value_counts().to_dict(),
              "split": df.subset.value_counts().to_dict()}
     long_tail(df, stats)
+    threshold_table(df, stats)
     temperature(df, stats)
     (C.RESULTS_DIR / "metrics" / "eda_summary.json").write_text(json.dumps(stats, indent=2))
     print(json.dumps(stats, indent=2))

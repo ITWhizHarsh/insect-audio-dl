@@ -48,6 +48,53 @@
     }
   },
   "species_below_25": 245,
+  "working_subset_table": [
+    {
+      "threshold": 10,
+      "species": 459,
+      "files": 26297,
+      "hours": 226.6,
+      "train": 15788,
+      "val": 5290,
+      "test": 5219
+    },
+    {
+      "threshold": 25,
+      "species": 214,
+      "files": 22596,
+      "hours": 177.9,
+      "train": 13529,
+      "val": 4546,
+      "test": 4521
+    },
+    {
+      "threshold": 40,
+      "species": 141,
+      "files": 20319,
+      "hours": 151.2,
+      "train": 12166,
+      "val": 4083,
+      "test": 4070
+    },
+    {
+      "threshold": 60,
+      "species": 101,
+      "files": 18377,
+      "hours": 131.3,
+      "train": 11007,
+      "val": 3686,
+      "test": 3684
+    },
+    {
+      "threshold": 100,
+      "species": 60,
+      "files": 15119,
+      "hours": 103.2,
+      "train": 9052,
+      "val": 3031,
+      "test": 3036
+    }
+  ],
   "temperature": {
     "files_with_temperature": 4906,
     "fraction": 0.1865612047001559,

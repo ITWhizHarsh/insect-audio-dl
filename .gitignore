@@ -1,0 +1,11 @@
+# audio and cached features are never committed (licensed data, ~GBs)
+data/raw/
+data/processed/
+outputs/
+*.pt
+
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.DS_Store
+.venv/

@@ -32,9 +32,11 @@ CAPS = {"Train": 30, "Validation": 10, "Test": 10}
 META = Path("data/meta/InsectSet459_Train_Val_Test_Annotation.csv")
 
 
-def choose_species(meta, n_species, min_recordings):
+def choose_species(meta, n_species=12, min_recordings=40, threshold_mode=False):
     counts = meta.groupby(["species_name", "group"]).size().reset_index(name="n")
     counts = counts[counts.n >= min_recordings].sort_values("n", ascending=False)
+    if threshold_mode:
+        return sorted(counts.species_name.unique().tolist())
     per_group = n_species // 2
     chosen = []
     for group in ["Orthoptera", "Cicadidae"]:
@@ -74,17 +76,23 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--n-species", type=int, default=12)
     ap.add_argument("--min-recordings", type=int, default=40)
+    ap.add_argument("--threshold-mode", action="store_true",
+                    help="Select all species with >= min-recordings with no per-species cap or group truncation")
     ap.add_argument("--max-mb", type=float, default=3.0)
+    ap.add_argument("--no-max-mb", action="store_true",
+                    help="Do not filter recordings by compressed size")
     ap.add_argument("--out", default="data/raw/pilot")
     ap.add_argument("--workers", type=int, default=6)
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--caps", type=int, nargs=3, default=None, metavar=("TRAIN", "VAL", "TEST"),
                     help="max recordings per species in each split (default 30 10 10)")
+    ap.add_argument("--dry-run", action="store_true",
+                    help="Print exact compressed size per split from central directories without downloading audio")
     args = ap.parse_args()
     caps = dict(zip(SPLITS, args.caps)) if args.caps else CAPS
 
     meta = pd.read_csv(META)
-    species = choose_species(meta, args.n_species, args.min_recordings)
+    species = choose_species(meta, args.n_species, args.min_recordings, threshold_mode=args.threshold_mode)
     print(f"{len(species)} species:", ", ".join(species))
 
     rows, jobs = [], []
@@ -93,17 +101,32 @@ def main():
         part = meta[(meta.subset == split) & meta.species_name.isin(species)].copy()
         part = part[part.file_name.isin(directory)]
         part["compress_mb"] = part.file_name.map(lambda f: directory[f].compress_size / 1e6)
-        part = part[part.compress_mb <= args.max_mb]
-        part = (part.sample(frac=1, random_state=args.seed)
-                    .groupby("species_name").head(caps[split]))
-        out_dir = Path(args.out) / split
-        out_dir.mkdir(parents=True, exist_ok=True)
-        for f in part.file_name:
-            dest = out_dir / f
-            if not dest.exists():
-                jobs.append((ZENODO.format(split), directory[f], dest))
+        if not (args.threshold_mode or args.no_max_mb):
+            part = part[part.compress_mb <= args.max_mb]
+        if not args.threshold_mode:
+            part = (part.sample(frac=1, random_state=args.seed)
+                        .groupby("species_name").head(caps[split]))
+        elif args.caps:
+            part = (part.sample(frac=1, random_state=args.seed)
+                        .groupby("species_name").head(caps[split]))
+
+        if not args.dry_run:
+            out_dir = Path(args.out) / split
+            out_dir.mkdir(parents=True, exist_ok=True)
+            for f in part.file_name:
+                dest = out_dir / f
+                if not dest.exists():
+                    jobs.append((ZENODO.format(split), directory[f], dest))
         rows.append(part)
-        print(f"{split}: {len(part)} files, {part.compress_mb.sum():.0f} MB compressed")
+        print(f"{split}: {len(part)} files, {part.compress_mb.sum():.1f} MB compressed ({part.compress_mb.sum() / 1024:.2f} GB)")
+
+    total_files = sum(len(p) for p in rows)
+    total_mb = sum(p.compress_mb.sum() for p in rows)
+    print(f"Total: {total_files} files, {total_mb:.1f} MB ({total_mb / 1024:.2f} GB) compressed")
+
+    if args.dry_run:
+        print("[dry-run] Audio download skipped.")
+        return
 
     manifest = pd.concat(rows)
     manifest["path"] = [str(Path(args.out) / s / f) for s, f in zip(manifest.subset, manifest.file_name)]

@@ -27,7 +27,7 @@ from src.features import handcrafted, logmel  # noqa: E402
 
 
 def process(args):
-    path, is_train = args
+    path, is_train, hand_only = args
     try:
         y = load_audio(path)
     except Exception as exc:
@@ -36,7 +36,7 @@ def process(args):
     cap = C.MAX_CHUNKS_TRAIN if is_train else C.MAX_CHUNKS_EVAL
     chunks = chunk_audio(y, hop, cap)
     hand = np.stack([handcrafted.extract(c) for c in chunks])
-    mel = np.stack([logmel.logmel(c) for c in chunks]).astype(np.float16)
+    mel = None if hand_only else np.stack([logmel.logmel(c) for c in chunks]).astype(np.float16)
     return path, hand, mel, len(y) / C.SAMPLE_RATE
 
 
@@ -44,6 +44,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--manifest", required=True)
     ap.add_argument("--name", default="pilot")
+    ap.add_argument("--hand-only", action="store_true", help="cache handcrafted features only (skip log-mel)")
     ap.add_argument("--workers", type=int, default=4)
     args = ap.parse_args()
 
@@ -58,7 +59,7 @@ def main():
     durations, failures = {}, []
     for split in C.SPLITS:
         part = manifest[manifest.subset == split].reset_index(drop=True)
-        jobs = [(str(root / p), split == "Train") for p in part.path]
+        jobs = [(str(root / p), split == "Train", args.hand_only) for p in part.path]
         rows, hands, mels = [], [], []
         with ProcessPoolExecutor(args.workers) as pool:
             for (path, hand, mel, dur), (_, r) in zip(pool.map(process, jobs, chunksize=4), part.iterrows()):
@@ -70,10 +71,12 @@ def main():
                     rows.append({"file_name": r.file_name, "species_name": r.species_name,
                                  "label": label_of[r.species_name], "chunk": k})
                 hands.append(hand)
-                mels.append(mel)
+                if not args.hand_only:
+                    mels.append(mel)
         pd.DataFrame(rows).to_csv(out / f"{split}_index.csv", index=False)
         np.save(out / f"{split}_hand.npy", np.concatenate(hands))
-        np.save(out / f"{split}_logmel.npy", np.concatenate(mels))
+        if not args.hand_only:
+            np.save(out / f"{split}_logmel.npy", np.concatenate(mels))
         print(f"{split}: {part.shape[0]} files -> {len(rows)} chunks", flush=True)
 
     pd.Series(durations, name="seconds").to_csv(out / "durations.csv")

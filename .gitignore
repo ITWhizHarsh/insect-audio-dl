@@ -11,3 +11,4 @@ __pycache__/
 .venv/
 data/fetch_log.txt
 data/fetch_log*.txt
+colab_upload/

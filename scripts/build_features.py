@@ -8,6 +8,16 @@ For each recording in the manifest: load -> resample -> chunk, then compute
     <split>_hand.npy    float32 (N, 146)
     <split>_logmel.npy  float16 (N, 128, 431)
 
+The log-mel arrays of the larger subsets do not fit in RAM on an 8 GB
+machine (141 species: ~30k chunks x 128 x 431 x 2 bytes = 3.3 GB, and
+np.concatenate would need a second copy). Each file's log-mels are therefore
+appended to a raw temporary file on disk as soon as they are computed, and
+copied into the final .npy with np.lib.format.open_memmap once the chunk
+count is known. The result is the same file np.save would have written.
+
+Manifests written on Windows store paths as data\raw\...; they are turned
+into POSIX paths before being joined with the repository root.
+
 Usage:
     python scripts/build_features.py --manifest data/raw/pilot/manifest.csv --name pilot
 """
@@ -40,6 +50,21 @@ def process(args):
     return path, hand, mel, len(y) / C.SAMPLE_RATE
 
 
+def posix(path):
+    return path.replace("\\", "/")
+
+
+def raw_to_npy(raw, path, shape, dtype, block=256):
+    """Copy a raw file of stacked C-order arrays into a .npy file, block by block."""
+    src = np.memmap(raw, dtype=dtype, mode="r", shape=shape)
+    dst = np.lib.format.open_memmap(path, mode="w+", dtype=dtype, shape=shape)
+    for i in range(0, shape[0], block):
+        dst[i:i + block] = src[i:i + block]
+    dst.flush()
+    del src, dst
+    raw.unlink()
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--manifest", required=True)
@@ -59,8 +84,10 @@ def main():
     durations, failures = {}, []
     for split in C.SPLITS:
         part = manifest[manifest.subset == split].reset_index(drop=True)
-        jobs = [(str(root / p), split == "Train", args.hand_only) for p in part.path]
-        rows, hands, mels = [], [], []
+        jobs = [(str(root / posix(p)), split == "Train", args.hand_only) for p in part.path]
+        rows, hands, mel_shape = [], [], None
+        raw = out / f"{split}_logmel.part"
+        mel_file = None if args.hand_only else open(raw, "wb")
         with ProcessPoolExecutor(args.workers) as pool:
             for (path, hand, mel, dur), (_, r) in zip(pool.map(process, jobs, chunksize=4), part.iterrows()):
                 if hand is None:
@@ -72,11 +99,13 @@ def main():
                                  "label": label_of[r.species_name], "chunk": k})
                 hands.append(hand)
                 if not args.hand_only:
-                    mels.append(mel)
+                    mel_file.write(mel.tobytes())
+                    mel_shape = mel.shape[1:]
         pd.DataFrame(rows).to_csv(out / f"{split}_index.csv", index=False)
         np.save(out / f"{split}_hand.npy", np.concatenate(hands))
         if not args.hand_only:
-            np.save(out / f"{split}_logmel.npy", np.concatenate(mels))
+            mel_file.close()
+            raw_to_npy(raw, out / f"{split}_logmel.npy", (len(rows), *mel_shape), np.float16)
         print(f"{split}: {part.shape[0]} files -> {len(rows)} chunks", flush=True)
 
     pd.Series(durations, name="seconds").to_csv(out / "durations.csv")

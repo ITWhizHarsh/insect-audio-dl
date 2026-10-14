@@ -1,0 +1,32 @@
+# Main comparison on the 40-species benchmark subset (20 Orthoptera + 20 Cicadidae,
+# up to 30 / 10 / 10 recordings per species from the official split).
+# Common protocol: same cached inputs, AdamW + one-cycle schedule, checkpoint chosen on
+# validation file-level macro-F1, a single test evaluation. Seeds vary initialisation
+# and batch order only. Ordered so one seed of every model finishes first.
+# Measured on the Apple M2 (8 GB): MLP ~1 min, CNN ~35 min, CRNN ~1.5 h,
+# AST (laptop setting) ~1.5 h, EfficientNetV2-S ~2.6 h per run.
+
+# --- seed 42, every model ---
+# MLP on 146-d handcrafted features (Abhishek), CPU
+--model mlp --data species40 --epochs 150 --batch 64 --wd 1e-4 --seed 42 --tag _s42
+# VGG-style log-mel CNN (Saurabh)
+--model cnn --data species40 --epochs 30 --augment --seed 42 --tag _s42
+# CRNN (Saksham): lower learning rate and gradient clipping for the LSTM after the pilot plateau
+--model crnn --data species40 --epochs 30 --augment --lr 5e-4 --clip 1 --seed 42 --tag _s42
+# AST, AudioSet weights (Harsh). Laptop setting: non-overlapping patches (stride 16),
+# patchout 0.5 and the lower 6 blocks frozen, bfloat16; full stride-10 fine-tuning is in species40_gpu.txt
+--model ast --data species40 --epochs 10 --batch 16 --eval-batch 32 --lr 5e-5 --head-lr-mult 10 --wd 1e-2 --augment --amp --ast-stride 16 --patchout 0.5 --freeze 6 --seed 42 --tag _lite_s42
+# EfficientNetV2-S, ImageNet weights (Saurabh)
+--model effnet --data species40 --epochs 15 --batch 16 --lr 3e-4 --head-lr-mult 3 --wd 1e-2 --augment --seed 42 --tag _s42
+
+# --- more seeds ---
+--model mlp --data species40 --epochs 150 --batch 64 --wd 1e-4 --seed 43 --tag _s43
+--model mlp --data species40 --epochs 150 --batch 64 --wd 1e-4 --seed 44 --tag _s44
+--model mlp --data species40 --epochs 150 --batch 64 --wd 1e-4 --seed 45 --tag _s45
+--model mlp --data species40 --epochs 150 --batch 64 --wd 1e-4 --seed 46 --tag _s46
+--model cnn --data species40 --epochs 30 --augment --seed 43 --tag _s43
+--model cnn --data species40 --epochs 30 --augment --seed 44 --tag _s44
+--model crnn --data species40 --epochs 30 --augment --lr 5e-4 --clip 1 --seed 43 --tag _s43
+--model crnn --data species40 --epochs 30 --augment --lr 5e-4 --clip 1 --seed 44 --tag _s44
+--model ast --data species40 --epochs 10 --batch 16 --eval-batch 32 --lr 5e-5 --head-lr-mult 10 --wd 1e-2 --augment --amp --ast-stride 16 --patchout 0.5 --freeze 6 --seed 43 --tag _lite_s43
+--model ast --data species40 --epochs 10 --batch 16 --eval-batch 32 --lr 5e-5 --head-lr-mult 10 --wd 1e-2 --augment --amp --ast-stride 16 --patchout 0.5 --freeze 6 --seed 44 --tag _lite_s44

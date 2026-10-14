@@ -1,0 +1,13 @@
+# Runs that need a GPU (free Colab / Kaggle T4): notebooks/colab_gpu_training.ipynb.
+# Same code, split, cached inputs and metrics as the laptop runs in species40_main.txt.
+
+# AST, AudioSet weights, full fine-tuning at the pretrained stride 10 (Harsh)
+--model ast --data species40 --epochs 10 --batch 16 --eval-batch 32 --lr 5e-5 --head-lr-mult 10 --wd 1e-2 --augment --amp --seed 42 --tag _s42
+--model ast --data species40 --epochs 10 --batch 16 --eval-batch 32 --lr 5e-5 --head-lr-mult 10 --wd 1e-2 --augment --amp --seed 43 --tag _s43
+--model ast --data species40 --epochs 10 --batch 16 --eval-batch 32 --lr 5e-5 --head-lr-mult 10 --wd 1e-2 --augment --amp --seed 44 --tag _s44
+# Does pretraining matter? AST from random initialisation, same budget
+--model ast --data species40 --epochs 10 --batch 16 --eval-batch 32 --lr 1e-4 --wd 1e-2 --augment --amp --scratch --seed 42 --tag _scratch_s42
+
+# EfficientNetV2-S, extra seeds (seed 42 runs on the laptop, same settings)
+--model effnet --data species40 --epochs 15 --batch 16 --lr 3e-4 --head-lr-mult 3 --wd 1e-2 --augment --seed 43 --tag _s43
+--model effnet --data species40 --epochs 15 --batch 16 --lr 3e-4 --head-lr-mult 3 --wd 1e-2 --augment --seed 44 --tag _s44

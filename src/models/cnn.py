@@ -6,7 +6,7 @@ time axis is summarised by mean + max pooling, so the classifier sees both
 how strong a pattern is on average and its single strongest occurrence
 (useful for intermittent calls). About 1.2 M parameters.
 
-The EfficientNetV2-S transfer-learning variant is added in the final phase.
+The ImageNet-pretrained EfficientNetV2-S variant is in effnet.py.
 """
 import torch
 import torch.nn as nn
@@ -28,10 +28,13 @@ class LogMelCNN(nn.Module):
             blocks.append(conv_block(cin, c))
             cin = c
         self.features = nn.Sequential(*blocks)
+        self.embed_dim = 2 * cin
         self.dropout = nn.Dropout(dropout)
-        self.fc = nn.Linear(2 * cin, n_classes)
+        self.fc = nn.Linear(self.embed_dim, n_classes)
 
-    def forward(self, x):                      # x: (B, 1, mels, frames)
+    def embed(self, x):                        # x: (B, 1, mels, frames)
         h = self.features(x).mean(dim=2)       # (B, C, T')
-        h = torch.cat([h.mean(-1), h.amax(-1)], dim=1)
-        return self.fc(self.dropout(h))
+        return torch.cat([h.mean(-1), h.amax(-1)], dim=1)
+
+    def forward(self, x):
+        return self.fc(self.dropout(self.embed(x)))

@@ -13,3 +13,6 @@ data/fetch_log.txt
 data/fetch_log*.txt
 colab_upload/
 logs/
+# per-run figures are kept for seed 42 only; other seeds are summarised in the aggregate tables
+results/figures/confusion_*_s4[3-9].png
+results/figures/curves_*_s4[3-9].png

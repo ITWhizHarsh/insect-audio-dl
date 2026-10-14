@@ -1,0 +1,37 @@
+# Temperature conditioning (Harsh) on the temperature subset: 36 Orthoptera species,
+# 855 temperature-labelled recordings (data/meta/orthotemp_manifest.csv).
+# Same files in every condition:
+#   none     - the plain model, no temperature input
+#   real     - FiLM conditioning on (standardised temperature, missing flag)
+#   shuffled - same FiLM model, temperatures permuted across training recordings
+#              (architecture-matched control: any gain over it must come from the
+#              temperature values themselves, not from the extra parameters)
+# Mixup is off everywhere because it would mix two recordings but keep one temperature.
+
+# MLP on handcrafted features (CPU, ~1 min per run)
+--model mlp --data orthotemp --epochs 150 --batch 64 --wd 1e-4 --seed 42 --tag _none_s42
+--model mlp --data orthotemp --epochs 150 --batch 64 --wd 1e-4 --temperature real --seed 42 --tag _real_s42
+--model mlp --data orthotemp --epochs 150 --batch 64 --wd 1e-4 --temperature shuffled --seed 42 --tag _shuffled_s42
+--model mlp --data orthotemp --epochs 150 --batch 64 --wd 1e-4 --seed 43 --tag _none_s43
+--model mlp --data orthotemp --epochs 150 --batch 64 --wd 1e-4 --temperature real --seed 43 --tag _real_s43
+--model mlp --data orthotemp --epochs 150 --batch 64 --wd 1e-4 --temperature shuffled --seed 43 --tag _shuffled_s43
+--model mlp --data orthotemp --epochs 150 --batch 64 --wd 1e-4 --seed 44 --tag _none_s44
+--model mlp --data orthotemp --epochs 150 --batch 64 --wd 1e-4 --temperature real --seed 44 --tag _real_s44
+--model mlp --data orthotemp --epochs 150 --batch 64 --wd 1e-4 --temperature shuffled --seed 44 --tag _shuffled_s44
+--model mlp --data orthotemp --epochs 150 --batch 64 --wd 1e-4 --seed 45 --tag _none_s45
+--model mlp --data orthotemp --epochs 150 --batch 64 --wd 1e-4 --temperature real --seed 45 --tag _real_s45
+--model mlp --data orthotemp --epochs 150 --batch 64 --wd 1e-4 --temperature shuffled --seed 45 --tag _shuffled_s45
+--model mlp --data orthotemp --epochs 150 --batch 64 --wd 1e-4 --seed 46 --tag _none_s46
+--model mlp --data orthotemp --epochs 150 --batch 64 --wd 1e-4 --temperature real --seed 46 --tag _real_s46
+--model mlp --data orthotemp --epochs 150 --batch 64 --wd 1e-4 --temperature shuffled --seed 46 --tag _shuffled_s46
+
+# log-mel CNN (MPS, ~20 min per run)
+--model cnn --data orthotemp --epochs 30 --augment --no-mixup --seed 42 --tag _none_s42
+--model cnn --data orthotemp --epochs 30 --augment --no-mixup --temperature real --seed 42 --tag _real_s42
+--model cnn --data orthotemp --epochs 30 --augment --no-mixup --temperature shuffled --seed 42 --tag _shuffled_s42
+--model cnn --data orthotemp --epochs 30 --augment --no-mixup --seed 43 --tag _none_s43
+--model cnn --data orthotemp --epochs 30 --augment --no-mixup --temperature real --seed 43 --tag _real_s43
+--model cnn --data orthotemp --epochs 30 --augment --no-mixup --temperature shuffled --seed 43 --tag _shuffled_s43
+--model cnn --data orthotemp --epochs 30 --augment --no-mixup --seed 44 --tag _none_s44
+--model cnn --data orthotemp --epochs 30 --augment --no-mixup --temperature real --seed 44 --tag _real_s44
+--model cnn --data orthotemp --epochs 30 --augment --no-mixup --temperature shuffled --seed 44 --tag _shuffled_s44

@@ -1,0 +1,42 @@
+{
+  "mlp: real vs none": {
+    "paired_bootstrap": {
+      "delta_macro_f1": 0.015854053354053266,
+      "ci": [
+        -0.02993473280429371,
+        0.06250971489994601
+      ],
+      "p_value": 0.4867566216891554
+    },
+    "mcnemar": {
+      "b": 7,
+      "c": 6,
+      "statistic": 6.0,
+      "p_value": 1.0
+    },
+    "seeds": [
+      5,
+      5
+    ]
+  },
+  "mlp: real vs shuffled": {
+    "paired_bootstrap": {
+      "delta_macro_f1": 0.0034541847041847373,
+      "ci": [
+        -0.050210514408119786,
+        0.05672635787156078
+      ],
+      "p_value": 0.9205397301349325
+    },
+    "mcnemar": {
+      "b": 9,
+      "c": 10,
+      "statistic": 9.0,
+      "p_value": 1.0
+    },
+    "seeds": [
+      5,
+      5
+    ]
+  }
+}

@@ -45,10 +45,14 @@ def main():
     args = ap.parse_args()
 
     runs = [r for plan in args.plans for r in read_plan(plan)]
-    todo = [(n, a) for n, a in runs if not (ROOT / "results/metrics" / f"{n}.json").exists()]
+    done = lambda name: (ROOT / "results/metrics" / f"{name}.json").exists()
+    todo = [(n, a) for n, a in runs if not done(n)]
     print(f"{len(runs)} runs in plan, {len(runs) - len(todo)} done, {len(todo)} to run", flush=True)
     (ROOT / "logs").mkdir(exist_ok=True)
     for k, (name, argv) in enumerate(todo, 1):
+        if done(name):     # finished meanwhile, e.g. by another queue running CPU-only runs
+            print(f"[{k}/{len(todo)}] {name}: already done, skipped", flush=True)
+            continue
         print(f"[{k}/{len(todo)}] {name}: {' '.join(argv)}", flush=True)
         if args.dry_run:
             continue

@@ -28,11 +28,14 @@ def file_level(probs, index_df):
     return mean.index.values, labels, mean.values
 
 
-def scores(y_true, y_pred, n_classes):
+def scores(y_true, y_pred, n_classes, present_only=False):
+    """present_only averages over the species that occur in y_true (for subsets of the test set,
+    where an absent species would otherwise enter the macro average as F1 = 0)."""
+    labels = np.unique(y_true) if present_only else range(n_classes)
     p, r, f, _ = precision_recall_fscore_support(
-        y_true, y_pred, labels=range(n_classes), average="macro", zero_division=0)
+        y_true, y_pred, labels=labels, average="macro", zero_division=0)
     _, _, f_w, _ = precision_recall_fscore_support(
-        y_true, y_pred, labels=range(n_classes), average="weighted", zero_division=0)
+        y_true, y_pred, labels=labels, average="weighted", zero_division=0)
     return {"accuracy": accuracy_score(y_true, y_pred), "macro_precision": p,
             "macro_recall": r, "macro_f1": f, "weighted_f1": f_w}
 
@@ -57,16 +60,20 @@ def full_report(chunk_probs, index_df, classes):
 
 def plot_confusion(cm, classes, path, title):
     cm_norm = cm / np.maximum(cm.sum(1, keepdims=True), 1)
-    fig, ax = plt.subplots(figsize=(7.5, 6.5))
+    n = len(classes)
+    size = max(7.5, 0.19 * n)
+    fig, ax = plt.subplots(figsize=(size, size * 0.87))
     im = ax.imshow(cm_norm, cmap="Blues", vmin=0, vmax=1)
     short = [c.replace("_", " ") for c in classes]
-    ax.set_xticks(range(len(classes)), short, rotation=60, ha="right", fontsize=7)
-    ax.set_yticks(range(len(classes)), short, fontsize=7)
-    for i in range(len(classes)):
-        for j in range(len(classes)):
-            if cm[i, j]:
-                ax.text(j, i, cm[i, j], ha="center", va="center", fontsize=6,
-                        color="white" if cm_norm[i, j] > 0.5 else "black")
+    tick = 7 if n <= 40 else 5
+    ax.set_xticks(range(n), short, rotation=60 if n <= 40 else 90, ha="right" if n <= 40 else "center", fontsize=tick)
+    ax.set_yticks(range(n), short, fontsize=tick)
+    if n <= 40:  # counts become unreadable beyond ~40 classes
+        for i in range(n):
+            for j in range(n):
+                if cm[i, j]:
+                    ax.text(j, i, cm[i, j], ha="center", va="center", fontsize=6 if n <= 20 else 4,
+                            color="white" if cm_norm[i, j] > 0.5 else "black")
     ax.set_xlabel("Predicted")
     ax.set_ylabel("True")
     ax.set_title(title, fontsize=10)

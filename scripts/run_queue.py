@@ -4,6 +4,7 @@ A plan file holds one line of src.train arguments per run ('#' starts a
 comment). A run counts as finished when results/metrics/<run>.json exists,
 so the queue can be stopped and restarted at any point without repeating
 work - useful on a laptop that sleeps, and on Colab sessions that time out.
+Runs that fail are tried once more at the end of the pass.
 Each run's console output goes to logs/<run>.log.
 
 Usage:
@@ -49,12 +50,23 @@ def main():
     todo = [(n, a) for n, a in runs if not done(n)]
     print(f"{len(runs)} runs in plan, {len(runs) - len(todo)} done, {len(todo)} to run", flush=True)
     (ROOT / "logs").mkdir(exist_ok=True)
+    failed = run_all(todo, done, args.dry_run)
+    if failed:
+        # one more attempt: a run killed from outside (memory pressure, a closed session) usually succeeds
+        print(f"retrying {len(failed)} failed run(s) once", flush=True)
+        failed = run_all(failed, done, args.dry_run)
+    if failed:
+        print("still failing:", ", ".join(name for name, _ in failed), flush=True)
+
+
+def run_all(todo, done, dry_run):
+    failed = []
     for k, (name, argv) in enumerate(todo, 1):
         if done(name):     # finished meanwhile, e.g. by another queue running CPU-only runs
             print(f"[{k}/{len(todo)}] {name}: already done, skipped", flush=True)
             continue
         print(f"[{k}/{len(todo)}] {name}: {' '.join(argv)}", flush=True)
-        if args.dry_run:
+        if dry_run:
             continue
         t0 = time.time()
         with open(ROOT / "logs" / f"{name}.log", "w") as log:
@@ -62,7 +74,9 @@ def main():
                                    cwd=ROOT, stdout=log, stderr=subprocess.STDOUT)
         status = "ok" if code == 0 else f"FAILED (exit {code}, see logs/{name}.log)"
         print(f"    {status} in {(time.time() - t0) / 60:.1f} min", flush=True)
-
+        if code != 0:
+            failed.append((name, argv))
+    return failed
 
 if __name__ == "__main__":
     main()

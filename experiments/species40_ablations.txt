@@ -1,0 +1,17 @@
+# Controlled ablations on the 40-species subset, seed 42 unless stated.
+
+# Augmentation ablation for the CNN (Saurabh): full = species40_main cnn _s42
+--model cnn --data species40 --epochs 30 --seed 42 --tag _noaug_s42
+--model cnn --data species40 --epochs 30 --augment --no-mixup --no-specaugment --seed 42 --tag _shift_s42
+--model cnn --data species40 --epochs 30 --augment --no-mixup --seed 42 --tag _nomixup_s42
+
+# Recurrent cell ablation for the CRNN (Saksham): LSTM = species40_main crnn _s42
+--model crnn --data species40 --epochs 30 --augment --lr 5e-4 --clip 1 --rnn gru --seed 42 --tag _gru_s42
+
+# Class imbalance (Saksham): training files subsampled to a 10:1 exponential long tail
+# (same subset for every method, --lt-seed 42), balanced validation / test unchanged
+--model cnn --data species40 --epochs 30 --augment --long-tail 10 --seed 42 --tag _lt10_none_s42
+--model cnn --data species40 --epochs 30 --augment --long-tail 10 --weights inverse --seed 42 --tag _lt10_inverse_s42
+--model cnn --data species40 --epochs 30 --augment --long-tail 10 --weights effective --seed 42 --tag _lt10_effective_s42
+--model cnn --data species40 --epochs 30 --augment --long-tail 10 --sampler balanced --seed 42 --tag _lt10_balanced_s42
+--model cnn --data species40 --epochs 30 --augment --long-tail 10 --loss logit-adjusted --seed 42 --tag _lt10_logitadj_s42

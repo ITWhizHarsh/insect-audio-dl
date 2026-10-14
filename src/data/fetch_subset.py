@@ -12,8 +12,17 @@ Selection rule (deterministic, seed fixed):
   * per species and per official split, up to a cap of recordings whose
     compressed size is <= MAX_MB (keeps the pilot download small)
 
+Temperature subset (--temperature-subset), for the temperature-conditioning
+experiment: Orthoptera species that have enough recordings with a valid
+temperature in every split (choose_temperature_subset), keeping only those
+labelled recordings. Cicadidae are left out because none of their recordings
+carry a temperature. The size limit is applied before the per-split minimums,
+so the minimums hold for what is actually downloaded.
+
 Usage:
     python -m src.data.fetch_subset --n-species 12 --out data/raw/pilot
+    python -m src.data.fetch_subset --from-manifest data/meta/species40_manifest.csv --out data/raw/species40
+    python -m src.data.fetch_subset --temperature-subset --dry-run
 """
 import argparse
 import struct
@@ -25,6 +34,8 @@ from pathlib import Path
 import pandas as pd
 import requests
 from remotezip import RemoteZip
+
+from src.data.recordist import clean_temperature
 
 ZENODO = "https://zenodo.org/records/18554693/files/{}.zip?download=1"
 SPLITS = ["Train", "Validation", "Test"]
@@ -42,6 +53,27 @@ def choose_species(meta, n_species=12, min_recordings=40, threshold_mode=False):
     for group in ["Orthoptera", "Cicadidae"]:
         chosen += counts[counts.group == group].species_name.head(per_group).tolist()
     return sorted(chosen)
+
+
+def choose_temperature_subset(meta, min_train=20, min_eval=3):
+    """Temperature-labelled Orthoptera rows of species with enough labels in every split.
+
+    A species is kept when it has >= min_train labelled Train files and
+    >= min_eval labelled files in each of Validation and Test, so a model can
+    both learn from and be scored on temperature. Unlabelled rows are dropped.
+    """
+    labelled = clean_temperature(meta[meta.group == "Orthoptera"]).dropna(subset=["temperature"])
+    n = labelled.groupby(["species_name", "subset"]).size().unstack(fill_value=0)
+    n = n.reindex(columns=SPLITS, fill_value=0)
+    keep = n[(n.Train >= min_train) & (n.Validation >= min_eval) & (n.Test >= min_eval)].index
+    return labelled[labelled.species_name.isin(keep)]
+
+
+def with_sizes(meta, directories):
+    """Rows of meta that exist in their split's zip, with the compressed size in MB."""
+    meta = meta[[f in directories[s] for f, s in zip(meta.file_name, meta.subset)]].copy()
+    meta["compress_mb"] = [directories[s][f].compress_size / 1e6 for f, s in zip(meta.file_name, meta.subset)]
+    return meta
 
 
 def read_directory(split):
@@ -88,27 +120,53 @@ def main():
                     help="max recordings per species in each split (default 30 10 10)")
     ap.add_argument("--dry-run", action="store_true",
                     help="Print exact compressed size per split from central directories without downloading audio")
+    ap.add_argument("--from-manifest", default=None,
+                    help="re-fetch exactly the files listed in an existing manifest (ignores selection options)")
+    ap.add_argument("--temperature-subset", action="store_true",
+                    help="Orthoptera species with enough temperature-labelled files; keep only labelled files")
+    ap.add_argument("--min-temp-train", type=int, default=20,
+                    help="temperature subset: minimum labelled Train files per species")
+    ap.add_argument("--min-temp-eval", type=int, default=3,
+                    help="temperature subset: minimum labelled files per species in Validation and in Test")
     args = ap.parse_args()
     caps = dict(zip(SPLITS, args.caps)) if args.caps else CAPS
 
     meta = pd.read_csv(META)
-    species = choose_species(meta, args.n_species, args.min_recordings, threshold_mode=args.threshold_mode)
+    wanted, temp_files, directories = None, None, {}
+    if args.from_manifest:
+        wanted = pd.read_csv(args.from_manifest)
+        species = sorted(wanted.species_name.unique())
+    elif args.temperature_subset:
+        directories = {split: read_directory(split) for split in SPLITS}
+        sized = with_sizes(meta, directories)
+        if not args.no_max_mb:
+            sized = sized[sized.compress_mb <= args.max_mb]
+        chosen = choose_temperature_subset(sized, args.min_temp_train, args.min_temp_eval)
+        temp_files = set(chosen.file_name)
+        species = sorted(chosen.species_name.unique())
+    else:
+        species = choose_species(meta, args.n_species, args.min_recordings, threshold_mode=args.threshold_mode)
     print(f"{len(species)} species:", ", ".join(species))
 
     rows, jobs = [], []
     for split in SPLITS:
-        directory = read_directory(split)
+        directory = directories[split] if split in directories else read_directory(split)
         part = meta[(meta.subset == split) & meta.species_name.isin(species)].copy()
         part = part[part.file_name.isin(directory)]
         part["compress_mb"] = part.file_name.map(lambda f: directory[f].compress_size / 1e6)
-        if not (args.threshold_mode or args.no_max_mb):
-            part = part[part.compress_mb <= args.max_mb]
-        if not args.threshold_mode:
-            part = (part.sample(frac=1, random_state=args.seed)
-                        .groupby("species_name").head(caps[split]))
-        elif args.caps:
-            part = (part.sample(frac=1, random_state=args.seed)
-                        .groupby("species_name").head(caps[split]))
+        if wanted is not None:
+            # keep the manifest's row order so cached features line up with the original run
+            order = {f: i for i, f in enumerate(wanted[wanted.subset == split].file_name)}
+            part = part[part.file_name.isin(order)]
+            part = part.iloc[part.file_name.map(order).argsort()]
+        else:
+            if temp_files is not None:
+                part = part[part.file_name.isin(temp_files)]
+            if not (args.threshold_mode or args.no_max_mb):
+                part = part[part.compress_mb <= args.max_mb]
+            if not (args.threshold_mode or args.temperature_subset) or args.caps:
+                part = (part.sample(frac=1, random_state=args.seed)
+                            .groupby("species_name").head(caps[split]))
 
         if not args.dry_run:
             out_dir = Path(args.out) / split

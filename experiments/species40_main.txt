@@ -14,7 +14,8 @@
 # CRNN (Saksham): lower learning rate and gradient clipping for the LSTM after the pilot plateau
 --model crnn --data species40 --epochs 30 --augment --lr 5e-4 --clip 1 --seed 42 --tag _s42
 # AST, AudioSet weights (Harsh). Laptop setting: non-overlapping patches (stride 16),
-# patchout 0.5 and the lower 6 blocks frozen, bfloat16; full stride-10 fine-tuning is in species40_gpu.txt
+# patchout 0.5 and the lower 6 blocks frozen, float32 on MPS (--amp only acts on CUDA); full stride-10
+# fine-tuning is in species40_gpu.txt
 --model ast --data species40 --epochs 10 --batch 16 --eval-batch 32 --lr 5e-5 --head-lr-mult 10 --wd 1e-2 --augment --amp --ast-stride 16 --patchout 0.5 --freeze 6 --seed 42 --tag _lite_s42
 # EfficientNetV2-S, ImageNet weights (Saurabh)
 --model effnet --data species40 --epochs 15 --batch 16 --lr 3e-4 --head-lr-mult 3 --wd 1e-2 --augment --seed 42 --tag _s42

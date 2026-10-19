@@ -1,0 +1,847 @@
+{
+  "name": "species40_s42",
+  "split": "test",
+  "runs": [
+    "mlp_species40_s42",
+    "cnn_species40_s42",
+    "crnn_species40_s42",
+    "ast_species40_lite_s42"
+  ],
+  "n_files": 398,
+  "files_dropped_to_align": {
+    "mlp_species40_s42": 0,
+    "cnn_species40_s42": 0,
+    "crnn_species40_s42": 0,
+    "ast_species40_lite_s42": 0
+  },
+  "scores": {
+    "mlp_species40_s42": {
+      "accuracy": 0.6256281407035176,
+      "macro_precision": 0.6239313464313464,
+      "macro_recall": 0.624375,
+      "macro_f1": 0.6163995047779878,
+      "weighted_f1": 0.6174869394753646
+    },
+    "cnn_species40_s42": {
+      "accuracy": 0.8040201005025126,
+      "macro_precision": 0.81081761988012,
+      "macro_recall": 0.8012499999999999,
+      "macro_f1": 0.7944393050022172,
+      "weighted_f1": 0.7967564204377392
+    },
+    "crnn_species40_s42": {
+      "accuracy": 0.6708542713567839,
+      "macro_precision": 0.6801923076923078,
+      "macro_recall": 0.669375,
+      "macro_f1": 0.6625034463057918,
+      "weighted_f1": 0.6633200465384842
+    },
+    "ast_species40_lite_s42": {
+      "accuracy": 0.8417085427135679,
+      "macro_precision": 0.8523075862046451,
+      "macro_recall": 0.8400000000000001,
+      "macro_f1": 0.8382240015609245,
+      "weighted_f1": 0.8393437974713581
+    }
+  },
+  "ensemble_mean_probs": {
+    "accuracy": 0.8190954773869347,
+    "macro_precision": 0.8275388500388502,
+    "macro_recall": 0.8168749999999999,
+    "macro_f1": 0.8121408705075753,
+    "weighted_f1": 0.8139026916581737
+  },
+  "agreement": {
+    "all_right": 200,
+    "all_wrong": 33,
+    "oracle_accuracy": 0.9170854271356784
+  },
+  "groups": {
+    "mlp_species40_s42": {
+      "Cicadidae": {
+        "n_files": 200,
+        "accuracy": 0.7
+      },
+      "Orthoptera": {
+        "n_files": 198,
+        "accuracy": 0.5505050505050505
+      },
+      "errors": 149,
+      "cross_group_errors": 33
+    },
+    "cnn_species40_s42": {
+      "Cicadidae": {
+        "n_files": 200,
+        "accuracy": 0.855
+      },
+      "Orthoptera": {
+        "n_files": 198,
+        "accuracy": 0.7525252525252525
+      },
+      "errors": 78,
+      "cross_group_errors": 10
+    },
+    "crnn_species40_s42": {
+      "Cicadidae": {
+        "n_files": 200,
+        "accuracy": 0.72
+      },
+      "Orthoptera": {
+        "n_files": 198,
+        "accuracy": 0.6212121212121212
+      },
+      "errors": 131,
+      "cross_group_errors": 20
+    },
+    "ast_species40_lite_s42": {
+      "Cicadidae": {
+        "n_files": 200,
+        "accuracy": 0.85
+      },
+      "Orthoptera": {
+        "n_files": 198,
+        "accuracy": 0.8333333333333334
+      },
+      "errors": 63,
+      "cross_group_errors": 12
+    },
+    "ensemble_mean_probs": {
+      "Cicadidae": {
+        "n_files": 200,
+        "accuracy": 0.845
+      },
+      "Orthoptera": {
+        "n_files": 198,
+        "accuracy": 0.7929292929292929
+      },
+      "errors": 72,
+      "cross_group_errors": 11
+    }
+  },
+  "top_confusions": {
+    "mlp_species40_s42": [
+      {
+        "a": "Aleeta_curvicosta",
+        "b": "Atrapsalta_corticina",
+        "count": 4,
+        "a_as_b": 4,
+        "b_as_a": 0,
+        "cross_group": false
+      },
+      {
+        "a": "Chorthippus_brunneus",
+        "b": "Pseudochorthippus_parallelus",
+        "count": 4,
+        "a_as_b": 2,
+        "b_as_a": 2,
+        "cross_group": false
+      },
+      {
+        "a": "Eumodicogryllus_bordigalensis",
+        "b": "Gryllus_bimaculatus",
+        "count": 4,
+        "a_as_b": 2,
+        "b_as_a": 2,
+        "cross_group": false
+      },
+      {
+        "a": "Gryllus_bimaculatus",
+        "b": "Gryllus_campestris",
+        "count": 4,
+        "a_as_b": 1,
+        "b_as_a": 3,
+        "cross_group": false
+      },
+      {
+        "a": "Magicicada_cassini",
+        "b": "Magicicada_septendecim",
+        "count": 4,
+        "a_as_b": 2,
+        "b_as_a": 2,
+        "cross_group": false
+      },
+      {
+        "a": "Neotibicen_pruinosus",
+        "b": "Psaltoda_plaga",
+        "count": 4,
+        "a_as_b": 2,
+        "b_as_a": 2,
+        "cross_group": false
+      },
+      {
+        "a": "Aleeta_curvicosta",
+        "b": "Galanga_labeculata",
+        "count": 3,
+        "a_as_b": 2,
+        "b_as_a": 1,
+        "cross_group": false
+      },
+      {
+        "a": "Conocephalus_fuscus",
+        "b": "Roeseliana_roeselii",
+        "count": 3,
+        "a_as_b": 1,
+        "b_as_a": 2,
+        "cross_group": false
+      },
+      {
+        "a": "Gryllus_bimaculatus",
+        "b": "Gryllus_pennsylvanicus",
+        "count": 3,
+        "a_as_b": 0,
+        "b_as_a": 3,
+        "cross_group": false
+      },
+      {
+        "a": "Neotibicen_pruinosus",
+        "b": "Neotibicen_tibicen",
+        "count": 3,
+        "a_as_b": 2,
+        "b_as_a": 1,
+        "cross_group": false
+      }
+    ],
+    "cnn_species40_s42": [
+      {
+        "a": "Gryllus_bimaculatus",
+        "b": "Gryllus_pennsylvanicus",
+        "count": 4,
+        "a_as_b": 1,
+        "b_as_a": 3,
+        "cross_group": false
+      },
+      {
+        "a": "Magicicada_cassini",
+        "b": "Magicicada_septendecim",
+        "count": 4,
+        "a_as_b": 3,
+        "b_as_a": 1,
+        "cross_group": false
+      },
+      {
+        "a": "Galanga_labeculata",
+        "b": "Popplepsalta_notialis",
+        "count": 3,
+        "a_as_b": 1,
+        "b_as_a": 2,
+        "cross_group": false
+      },
+      {
+        "a": "Gryllus_bimaculatus",
+        "b": "Gryllus_campestris",
+        "count": 3,
+        "a_as_b": 2,
+        "b_as_a": 1,
+        "cross_group": false
+      },
+      {
+        "a": "Gryllus_campestris",
+        "b": "Gryllus_pennsylvanicus",
+        "count": 3,
+        "a_as_b": 0,
+        "b_as_a": 3,
+        "cross_group": false
+      },
+      {
+        "a": "Phaneroptera_nana",
+        "b": "Platycleis_albopunctata",
+        "count": 3,
+        "a_as_b": 3,
+        "b_as_a": 0,
+        "cross_group": false
+      },
+      {
+        "a": "Aleeta_curvicosta",
+        "b": "Yoyetta_repetens",
+        "count": 2,
+        "a_as_b": 1,
+        "b_as_a": 1,
+        "cross_group": false
+      },
+      {
+        "a": "Atrapsalta_corticina",
+        "b": "Popplepsalta_notialis",
+        "count": 2,
+        "a_as_b": 2,
+        "b_as_a": 0,
+        "cross_group": false
+      },
+      {
+        "a": "Chorthippus_biguttulus",
+        "b": "Tettigonia_cantans",
+        "count": 2,
+        "a_as_b": 1,
+        "b_as_a": 1,
+        "cross_group": false
+      },
+      {
+        "a": "Conocephalus_fuscus",
+        "b": "Roeseliana_roeselii",
+        "count": 2,
+        "a_as_b": 0,
+        "b_as_a": 2,
+        "cross_group": false
+      }
+    ],
+    "crnn_species40_s42": [
+      {
+        "a": "Gryllus_bimaculatus",
+        "b": "Gryllus_campestris",
+        "count": 7,
+        "a_as_b": 5,
+        "b_as_a": 2,
+        "cross_group": false
+      },
+      {
+        "a": "Gryllus_bimaculatus",
+        "b": "Gryllus_pennsylvanicus",
+        "count": 6,
+        "a_as_b": 1,
+        "b_as_a": 5,
+        "cross_group": false
+      },
+      {
+        "a": "Chorthippus_brunneus",
+        "b": "Chorthippus_mollis",
+        "count": 4,
+        "a_as_b": 4,
+        "b_as_a": 0,
+        "cross_group": false
+      },
+      {
+        "a": "Aleeta_curvicosta",
+        "b": "Galanga_labeculata",
+        "count": 3,
+        "a_as_b": 2,
+        "b_as_a": 1,
+        "cross_group": false
+      },
+      {
+        "a": "Conocephalus_fuscus",
+        "b": "Roeseliana_roeselii",
+        "count": 3,
+        "a_as_b": 1,
+        "b_as_a": 2,
+        "cross_group": false
+      },
+      {
+        "a": "Magicicada_cassini",
+        "b": "Magicicada_septendecim",
+        "count": 3,
+        "a_as_b": 2,
+        "b_as_a": 1,
+        "cross_group": false
+      },
+      {
+        "a": "Aleeta_curvicosta",
+        "b": "Atrapsalta_corticina",
+        "count": 2,
+        "a_as_b": 2,
+        "b_as_a": 0,
+        "cross_group": false
+      },
+      {
+        "a": "Aleeta_curvicosta",
+        "b": "Yoyetta_repetens",
+        "count": 2,
+        "a_as_b": 1,
+        "b_as_a": 1,
+        "cross_group": false
+      },
+      {
+        "a": "Atrapsalta_corticina",
+        "b": "Popplepsalta_notialis",
+        "count": 2,
+        "a_as_b": 1,
+        "b_as_a": 1,
+        "cross_group": false
+      },
+      {
+        "a": "Chorthippus_biguttulus",
+        "b": "Chorthippus_mollis",
+        "count": 2,
+        "a_as_b": 2,
+        "b_as_a": 0,
+        "cross_group": false
+      }
+    ],
+    "ast_species40_lite_s42": [
+      {
+        "a": "Gryllus_campestris",
+        "b": "Gryllus_pennsylvanicus",
+        "count": 4,
+        "a_as_b": 0,
+        "b_as_a": 4,
+        "cross_group": false
+      },
+      {
+        "a": "Magicicada_cassini",
+        "b": "Magicicada_septendecim",
+        "count": 3,
+        "a_as_b": 1,
+        "b_as_a": 2,
+        "cross_group": false
+      },
+      {
+        "a": "Phaneroptera_nana",
+        "b": "Pholidoptera_griseoaptera",
+        "count": 3,
+        "a_as_b": 2,
+        "b_as_a": 1,
+        "cross_group": false
+      },
+      {
+        "a": "Atrapsalta_corticina",
+        "b": "Popplepsalta_notialis",
+        "count": 2,
+        "a_as_b": 2,
+        "b_as_a": 0,
+        "cross_group": false
+      },
+      {
+        "a": "Chorthippus_biguttulus",
+        "b": "Tettigonia_cantans",
+        "count": 2,
+        "a_as_b": 1,
+        "b_as_a": 1,
+        "cross_group": false
+      },
+      {
+        "a": "Gryllus_bimaculatus",
+        "b": "Gryllus_pennsylvanicus",
+        "count": 2,
+        "a_as_b": 1,
+        "b_as_a": 1,
+        "cross_group": false
+      },
+      {
+        "a": "Henicopsaltria_eydouxii",
+        "b": "Psaltoda_plaga",
+        "count": 2,
+        "a_as_b": 1,
+        "b_as_a": 1,
+        "cross_group": false
+      },
+      {
+        "a": "Pholidoptera_griseoaptera",
+        "b": "Roeseliana_roeselii",
+        "count": 2,
+        "a_as_b": 1,
+        "b_as_a": 1,
+        "cross_group": false
+      },
+      {
+        "a": "Psaltoda_plaga",
+        "b": "Pterophylla_camellifolia",
+        "count": 2,
+        "a_as_b": 2,
+        "b_as_a": 0,
+        "cross_group": true
+      },
+      {
+        "a": "Tettigonia_cantans",
+        "b": "Tettigonia_viridissima",
+        "count": 2,
+        "a_as_b": 1,
+        "b_as_a": 1,
+        "cross_group": false
+      }
+    ]
+  },
+  "shared_confusions": [
+    {
+      "a": "Gryllus_bimaculatus",
+      "b": "Gryllus_campestris",
+      "mlp_species40_s42": 4,
+      "cnn_species40_s42": 3,
+      "crnn_species40_s42": 7,
+      "ast_species40_lite_s42": 1
+    },
+    {
+      "a": "Gryllus_bimaculatus",
+      "b": "Gryllus_pennsylvanicus",
+      "mlp_species40_s42": 3,
+      "cnn_species40_s42": 4,
+      "crnn_species40_s42": 6,
+      "ast_species40_lite_s42": 2
+    },
+    {
+      "a": "Magicicada_cassini",
+      "b": "Magicicada_septendecim",
+      "mlp_species40_s42": 4,
+      "cnn_species40_s42": 4,
+      "crnn_species40_s42": 3,
+      "ast_species40_lite_s42": 3
+    },
+    {
+      "a": "Gryllus_campestris",
+      "b": "Gryllus_pennsylvanicus",
+      "mlp_species40_s42": 1,
+      "cnn_species40_s42": 3,
+      "crnn_species40_s42": 2,
+      "ast_species40_lite_s42": 4
+    },
+    {
+      "a": "Atrapsalta_corticina",
+      "b": "Popplepsalta_notialis",
+      "mlp_species40_s42": 2,
+      "cnn_species40_s42": 2,
+      "crnn_species40_s42": 2,
+      "ast_species40_lite_s42": 2
+    },
+    {
+      "a": "Eumodicogryllus_bordigalensis",
+      "b": "Gryllus_bimaculatus",
+      "mlp_species40_s42": 4,
+      "cnn_species40_s42": 2,
+      "crnn_species40_s42": 1,
+      "ast_species40_lite_s42": 1
+    },
+    {
+      "a": "Neotibicen_pruinosus",
+      "b": "Neotibicen_tibicen",
+      "mlp_species40_s42": 3,
+      "cnn_species40_s42": 2,
+      "crnn_species40_s42": 2,
+      "ast_species40_lite_s42": 1
+    },
+    {
+      "a": "Neotibicen_pruinosus",
+      "b": "Psaltoda_plaga",
+      "mlp_species40_s42": 4,
+      "cnn_species40_s42": 1,
+      "crnn_species40_s42": 2,
+      "ast_species40_lite_s42": 1
+    },
+    {
+      "a": "Phaneroptera_nana",
+      "b": "Pholidoptera_griseoaptera",
+      "mlp_species40_s42": 2,
+      "cnn_species40_s42": 2,
+      "crnn_species40_s42": 1,
+      "ast_species40_lite_s42": 3
+    },
+    {
+      "a": "Pholidoptera_griseoaptera",
+      "b": "Roeseliana_roeselii",
+      "mlp_species40_s42": 3,
+      "cnn_species40_s42": 1,
+      "crnn_species40_s42": 1,
+      "ast_species40_lite_s42": 2
+    },
+    {
+      "a": "Aleeta_curvicosta",
+      "b": "Yoyetta_repetens",
+      "mlp_species40_s42": 1,
+      "cnn_species40_s42": 2,
+      "crnn_species40_s42": 2,
+      "ast_species40_lite_s42": 1
+    },
+    {
+      "a": "Chorthippus_biguttulus",
+      "b": "Tettigonia_cantans",
+      "mlp_species40_s42": 1,
+      "cnn_species40_s42": 2,
+      "crnn_species40_s42": 1,
+      "ast_species40_lite_s42": 2
+    },
+    {
+      "a": "Eumodicogryllus_bordigalensis",
+      "b": "Gryllus_campestris",
+      "mlp_species40_s42": 2,
+      "cnn_species40_s42": 1,
+      "crnn_species40_s42": 2,
+      "ast_species40_lite_s42": 1
+    },
+    {
+      "a": "Galanga_labeculata",
+      "b": "Henicopsaltria_eydouxii",
+      "mlp_species40_s42": 1,
+      "cnn_species40_s42": 1,
+      "crnn_species40_s42": 1,
+      "ast_species40_lite_s42": 1
+    },
+    {
+      "a": "Microcentrum_rhombifolium",
+      "b": "Pterophylla_camellifolia",
+      "mlp_species40_s42": 1,
+      "cnn_species40_s42": 1,
+      "crnn_species40_s42": 1,
+      "ast_species40_lite_s42": 1
+    },
+    {
+      "a": "Oecanthus_pellucens",
+      "b": "Phaneroptera_nana",
+      "mlp_species40_s42": 1,
+      "cnn_species40_s42": 1,
+      "crnn_species40_s42": 1,
+      "ast_species40_lite_s42": 1
+    }
+  ],
+  "all_wrong_files": [
+    {
+      "file": "Psaltoda_plaga_IN151545470_617955.mp3",
+      "true": "Psaltoda_plaga",
+      "mlp_species40_s42": "Neotibicen_pruinosus",
+      "cnn_species40_s42": "Pterophylla_camellifolia",
+      "crnn_species40_s42": "Pterophylla_camellifolia",
+      "ast_species40_lite_s42": "Pterophylla_camellifolia"
+    },
+    {
+      "file": "Yoyetta_repetens_IN67954339_158215.mp3",
+      "true": "Yoyetta_repetens",
+      "mlp_species40_s42": "Aleeta_curvicosta",
+      "cnn_species40_s42": "Aleeta_curvicosta",
+      "crnn_species40_s42": "Aleeta_curvicosta",
+      "ast_species40_lite_s42": "Atrapsalta_corticina"
+    },
+    {
+      "file": "Aleeta_curvicosta_IN149198013_600764.mp3",
+      "true": "Aleeta_curvicosta",
+      "mlp_species40_s42": "Atrapsalta_corticina",
+      "cnn_species40_s42": "Pterophylla_camellifolia",
+      "crnn_species40_s42": "Atrapsalta_corticina",
+      "ast_species40_lite_s42": "Atrapsalta_corticina"
+    },
+    {
+      "file": "Roeseliana_roeselii_IN124087769_486617.wav",
+      "true": "Roeseliana_roeselii",
+      "mlp_species40_s42": "Meimuna_opalifera",
+      "cnn_species40_s42": "Pseudochorthippus_parallelus",
+      "crnn_species40_s42": "Meimuna_opalifera",
+      "ast_species40_lite_s42": "Popplepsalta_notialis"
+    },
+    {
+      "file": "Magicicada_cassini_IN81037148_240487.mp3",
+      "true": "Magicicada_cassini",
+      "mlp_species40_s42": "Magicicada_septendecim",
+      "cnn_species40_s42": "Magicicada_septendecim",
+      "crnn_species40_s42": "Magicicada_septendecim",
+      "ast_species40_lite_s42": "Magicicada_septendecim"
+    },
+    {
+      "file": "Psaltoda_plaga_IN196391132_874462.mp3",
+      "true": "Psaltoda_plaga",
+      "mlp_species40_s42": "Meimuna_opalifera",
+      "cnn_species40_s42": "Meimuna_opalifera",
+      "crnn_species40_s42": "Magicicada_cassini",
+      "ast_species40_lite_s42": "Henicopsaltria_eydouxii"
+    },
+    {
+      "file": "Decticus_albifrons_IN181335625_804872.wav",
+      "true": "Decticus_albifrons",
+      "mlp_species40_s42": "Atrapsalta_corticina",
+      "cnn_species40_s42": "Gryllus_bimaculatus",
+      "crnn_species40_s42": "Gryllus_bimaculatus",
+      "ast_species40_lite_s42": "Gryllus_bimaculatus"
+    },
+    {
+      "file": "Roeseliana_roeselii_IN134618182_534215.mp3",
+      "true": "Roeseliana_roeselii",
+      "mlp_species40_s42": "Pholidoptera_griseoaptera",
+      "cnn_species40_s42": "Tettigonia_viridissima",
+      "crnn_species40_s42": "Decticus_albifrons",
+      "ast_species40_lite_s42": "Pholidoptera_griseoaptera"
+    },
+    {
+      "file": "Psaltoda_plaga_IN20377162_31265.mp3",
+      "true": "Psaltoda_plaga",
+      "mlp_species40_s42": "Magicicada_septendecim",
+      "cnn_species40_s42": "Cyclochila_australasiae",
+      "crnn_species40_s42": "Cyclochila_australasiae",
+      "ast_species40_lite_s42": "Pterophylla_camellifolia"
+    },
+    {
+      "file": "Eumodicogryllus_bordigalensis_IN129897272_516450.mp3",
+      "true": "Eumodicogryllus_bordigalensis",
+      "mlp_species40_s42": "Gryllus_campestris",
+      "cnn_species40_s42": "Gryllus_campestris",
+      "crnn_species40_s42": "Gryllus_campestris",
+      "ast_species40_lite_s42": "Gryllus_campestris"
+    },
+    {
+      "file": "Pholidoptera_griseoaptera_IN127620470_506045.mp3",
+      "true": "Pholidoptera_griseoaptera",
+      "mlp_species40_s42": "Roeseliana_roeselii",
+      "cnn_species40_s42": "Roeseliana_roeselii",
+      "crnn_species40_s42": "Roeseliana_roeselii",
+      "ast_species40_lite_s42": "Roeseliana_roeselii"
+    },
+    {
+      "file": "Tettigonia_cantans_IN88582058_282030.wav",
+      "true": "Tettigonia_cantans",
+      "mlp_species40_s42": "Pholidoptera_griseoaptera",
+      "cnn_species40_s42": "Pholidoptera_griseoaptera",
+      "crnn_species40_s42": "Pholidoptera_griseoaptera",
+      "ast_species40_lite_s42": "Eumodicogryllus_bordigalensis"
+    },
+    {
+      "file": "Chorthippus_biguttulus_IN61664569_140541.mp3",
+      "true": "Chorthippus_biguttulus",
+      "mlp_species40_s42": "Chorthippus_mollis",
+      "cnn_species40_s42": "Tettigonia_cantans",
+      "crnn_species40_s42": "Neotibicen_robinsonianus",
+      "ast_species40_lite_s42": "Tettigonia_cantans"
+    },
+    {
+      "file": "Psaltoda_plaga_IN19859444_30546.mp3",
+      "true": "Psaltoda_plaga",
+      "mlp_species40_s42": "Neotibicen_tibicen",
+      "cnn_species40_s42": "Cicada_barbara",
+      "crnn_species40_s42": "Henicopsaltria_eydouxii",
+      "ast_species40_lite_s42": "Neotibicen_pruinosus"
+    },
+    {
+      "file": "Pholidoptera_griseoaptera_XC865269.wav",
+      "true": "Pholidoptera_griseoaptera",
+      "mlp_species40_s42": "Chorthippus_mollis",
+      "cnn_species40_s42": "Phaneroptera_nana",
+      "crnn_species40_s42": "Chorthippus_mollis",
+      "ast_species40_lite_s42": "Phaneroptera_nana"
+    },
+    {
+      "file": "Neotibicen_pruinosus_IN131761730_524371.mp3",
+      "true": "Neotibicen_pruinosus",
+      "mlp_species40_s42": "Neotibicen_tibicen",
+      "cnn_species40_s42": "Neotibicen_tibicen",
+      "crnn_species40_s42": "Neotibicen_tibicen",
+      "ast_species40_lite_s42": "Neotibicen_tibicen"
+    },
+    {
+      "file": "Neotibicen_tibicen_IN226495869_1116888.mp3",
+      "true": "Neotibicen_tibicen",
+      "mlp_species40_s42": "Neotibicen_canicularis",
+      "cnn_species40_s42": "Meimuna_opalifera",
+      "crnn_species40_s42": "Chorthippus_biguttulus",
+      "ast_species40_lite_s42": "Aleeta_curvicosta"
+    },
+    {
+      "file": "Galanga_labeculata_IN66156419_152476.wav",
+      "true": "Galanga_labeculata",
+      "mlp_species40_s42": "Aleeta_curvicosta",
+      "cnn_species40_s42": "Cicada_barbara",
+      "crnn_species40_s42": "Psaltoda_plaga",
+      "ast_species40_lite_s42": "Psaltoda_plaga"
+    },
+    {
+      "file": "Galanga_labeculata_IN9525880_17247.mp3",
+      "true": "Galanga_labeculata",
+      "mlp_species40_s42": "Henicopsaltria_eydouxii",
+      "cnn_species40_s42": "Henicopsaltria_eydouxii",
+      "crnn_species40_s42": "Henicopsaltria_eydouxii",
+      "ast_species40_lite_s42": "Henicopsaltria_eydouxii"
+    },
+    {
+      "file": "Gryllus_pennsylvanicus_IN181629435_805935.mp3",
+      "true": "Gryllus_pennsylvanicus",
+      "mlp_species40_s42": "Popplepsalta_notialis",
+      "cnn_species40_s42": "Tettigonia_viridissima",
+      "crnn_species40_s42": "Popplepsalta_notialis",
+      "ast_species40_lite_s42": "Popplepsalta_notialis"
+    },
+    {
+      "file": "Gryllus_pennsylvanicus_IN57506313_132492.mp3",
+      "true": "Gryllus_pennsylvanicus",
+      "mlp_species40_s42": "Gryllus_campestris",
+      "cnn_species40_s42": "Gryllus_campestris",
+      "crnn_species40_s42": "Gryllus_bimaculatus",
+      "ast_species40_lite_s42": "Gryllus_campestris"
+    },
+    {
+      "file": "Tettigonia_cantans_IN183486908_813413.mp3",
+      "true": "Tettigonia_cantans",
+      "mlp_species40_s42": "Chorthippus_mollis",
+      "cnn_species40_s42": "Chorthippus_biguttulus",
+      "crnn_species40_s42": "Chorthippus_biguttulus",
+      "ast_species40_lite_s42": "Chorthippus_biguttulus"
+    },
+    {
+      "file": "Gryllus_pennsylvanicus_IN57904755_133230.wav",
+      "true": "Gryllus_pennsylvanicus",
+      "mlp_species40_s42": "Gryllus_bimaculatus",
+      "cnn_species40_s42": "Gryllus_bimaculatus",
+      "crnn_species40_s42": "Gryllus_bimaculatus",
+      "ast_species40_lite_s42": "Gryllus_bimaculatus"
+    },
+    {
+      "file": "Atrapsalta_corticina_IN34819796_49155.wav",
+      "true": "Atrapsalta_corticina",
+      "mlp_species40_s42": "Popplepsalta_notialis",
+      "cnn_species40_s42": "Popplepsalta_notialis",
+      "crnn_species40_s42": "Popplepsalta_notialis",
+      "ast_species40_lite_s42": "Popplepsalta_notialis"
+    },
+    {
+      "file": "Magicicada_septendecim_IN83565560_256550.mp3",
+      "true": "Magicicada_septendecim",
+      "mlp_species40_s42": "Magicicada_cassini",
+      "cnn_species40_s42": "Magicicada_cassini",
+      "crnn_species40_s42": "Magicicada_cassini",
+      "ast_species40_lite_s42": "Magicicada_cassini"
+    },
+    {
+      "file": "Roeseliana_roeselii_IN184891205_819071.mp3",
+      "true": "Roeseliana_roeselii",
+      "mlp_species40_s42": "Conocephalus_fuscus",
+      "cnn_species40_s42": "Conocephalus_fuscus",
+      "crnn_species40_s42": "Conocephalus_fuscus",
+      "ast_species40_lite_s42": "Henicopsaltria_eydouxii"
+    },
+    {
+      "file": "Gryllus_pennsylvanicus_IN140512905_556662.mp3",
+      "true": "Gryllus_pennsylvanicus",
+      "mlp_species40_s42": "Gryllus_bimaculatus",
+      "cnn_species40_s42": "Gryllus_bimaculatus",
+      "crnn_species40_s42": "Gryllus_bimaculatus",
+      "ast_species40_lite_s42": "Gryllus_campestris"
+    },
+    {
+      "file": "Gryllus_pennsylvanicus_IN131723691_524228.mp3",
+      "true": "Gryllus_pennsylvanicus",
+      "mlp_species40_s42": "Pterophylla_camellifolia",
+      "cnn_species40_s42": "Gryllus_bimaculatus",
+      "crnn_species40_s42": "Pterophylla_camellifolia",
+      "ast_species40_lite_s42": "Gryllus_campestris"
+    },
+    {
+      "file": "Microcentrum_rhombifolium_IN95344267_307064.mp3",
+      "true": "Microcentrum_rhombifolium",
+      "mlp_species40_s42": "Henicopsaltria_eydouxii",
+      "cnn_species40_s42": "Pterophylla_camellifolia",
+      "crnn_species40_s42": "Pterophylla_camellifolia",
+      "ast_species40_lite_s42": "Pterophylla_camellifolia"
+    },
+    {
+      "file": "Roeseliana_roeselii_IN133065089_529106.wav",
+      "true": "Roeseliana_roeselii",
+      "mlp_species40_s42": "Pholidoptera_griseoaptera",
+      "cnn_species40_s42": "Conocephalus_fuscus",
+      "crnn_species40_s42": "Gryllotalpa_gryllotalpa",
+      "ast_species40_lite_s42": "Cystosoma_saundersii"
+    },
+    {
+      "file": "Gryllus_bimaculatus_IN144843737_575261.mp3",
+      "true": "Gryllus_bimaculatus",
+      "mlp_species40_s42": "Magicicada_septendecim",
+      "cnn_species40_s42": "Gryllus_pennsylvanicus",
+      "crnn_species40_s42": "Gryllus_pennsylvanicus",
+      "ast_species40_lite_s42": "Gryllus_pennsylvanicus"
+    },
+    {
+      "file": "Phaneroptera_nana_XC832197.wav",
+      "true": "Phaneroptera_nana",
+      "mlp_species40_s42": "Oecanthus_pellucens",
+      "cnn_species40_s42": "Oecanthus_pellucens",
+      "crnn_species40_s42": "Oecanthus_pellucens",
+      "ast_species40_lite_s42": "Oecanthus_pellucens"
+    },
+    {
+      "file": "Phaneroptera_nana_XC927322.wav",
+      "true": "Phaneroptera_nana",
+      "mlp_species40_s42": "Roeseliana_roeselii",
+      "cnn_species40_s42": "Roeseliana_roeselii",
+      "crnn_species40_s42": "Roeseliana_roeselii",
+      "ast_species40_lite_s42": "Pholidoptera_griseoaptera"
+    }
+  ]
+}

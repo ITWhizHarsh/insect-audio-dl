@@ -1,0 +1,9 @@
+model,variant,seeds,params (M),test macro-F1 mean,test macro-F1 sd,test acc mean,test acc sd,val macro-F1 mean,test chunk macro-F1 mean,recordist-unseen macro-F1 mean,train time (s) mean
+MLP (handcrafted),-,5,0.2184,0.609,0.0074,0.6176,0.0078,0.6352,0.5664,0.5321,133.56
+CNN (log-mel),-,3,1.1932,0.7968,0.0126,0.8049,0.0113,0.8126,0.7569,0.7323,3977.8
+CNN (log-mel),noaug,1,1.1932,0.7818,,0.7864,,0.8169,0.7464,0.7123,3196.5
+CNN (log-mel),nomixup,1,1.1932,0.7955,,0.8015,,0.7965,0.7536,0.7222,3125.3
+CNN (log-mel),shift,1,1.1932,0.7647,,0.7714,,0.8068,0.7377,0.6873,3234.2
+CRNN (CNN + BiLSTM),-,3,1.6125,0.6726,0.0126,0.6826,0.0126,0.6995,0.6365,0.6503,3380.7333
+CRNN (CNN + BiLSTM),gru,1,1.4149,0.7184,,0.7236,,0.7512,0.6878,0.6549,3382.1
+AST (AudioSet),lite,3,85.447,0.8306,0.0147,0.8333,0.0145,0.8003,0.7684,0.7748,2883.6667

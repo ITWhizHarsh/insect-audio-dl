@@ -1,4 +1,44 @@
 {
+  "cnn: real vs none": {
+    "paired_bootstrap": {
+      "delta_macro_f1": -0.07178593011926337,
+      "ci": [
+        -0.13157028939910947,
+        -0.012455473108046662
+      ],
+      "p_value": 0.014992503748125937
+    },
+    "mcnemar": {
+      "b": 4,
+      "c": 15,
+      "statistic": 4.0,
+      "p_value": 0.0192108154296875
+    },
+    "seeds": [
+      3,
+      3
+    ]
+  },
+  "cnn: real vs shuffled": {
+    "paired_bootstrap": {
+      "delta_macro_f1": -0.028451178451178283,
+      "ci": [
+        -0.08427995634753435,
+        0.03255850682500938
+      ],
+      "p_value": 0.4307846076961519
+    },
+    "mcnemar": {
+      "b": 7,
+      "c": 11,
+      "statistic": 7.0,
+      "p_value": 0.480682373046875
+    },
+    "seeds": [
+      3,
+      3
+    ]
+  },
   "mlp: real vs none": {
     "paired_bootstrap": {
       "delta_macro_f1": 0.015854053354053266,

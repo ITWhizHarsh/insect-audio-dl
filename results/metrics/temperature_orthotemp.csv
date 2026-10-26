@@ -1,4 +1,7 @@
 model,condition,seeds,test macro-F1 mean,test macro-F1 sd,test acc mean,test acc sd,recordist-unseen macro-F1 mean,recordist-unseen files
+cnn,none,3,0.7036,0.0261,0.7212,0.0202,0.4581,18.0
+cnn,real,3,0.6316,0.01,0.652,0.0096,0.4026,18.0
+cnn,shuffled,3,0.6401,0.0163,0.6562,0.0131,0.3897,18.0
 mlp,none,5,0.4588,0.0237,0.483,0.0196,0.2308,18.0
 mlp,real,5,0.4704,0.0118,0.4855,0.0103,0.227,18.0
 mlp,shuffled,5,0.4311,0.0079,0.4553,0.0084,0.1675,18.0

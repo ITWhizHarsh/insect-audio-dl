@@ -1,0 +1,104 @@
+{
+  "run": "cnn_orthotemp_real_s42",
+  "model": "cnn",
+  "data": "orthotemp",
+  "params": 1276328,
+  "n_trainable": 1276328,
+  "config": {
+    "model": "cnn",
+    "data": "orthotemp",
+    "epochs": 30,
+    "batch": 32,
+    "eval_batch": 64,
+    "lr": 0.001,
+    "head_lr_mult": 1.0,
+    "wd": 0.001,
+    "clip": 0.0,
+    "accum": 1,
+    "amp": false,
+    "patience": 0,
+    "augment": true,
+    "no_mixup": true,
+    "no_specaugment": false,
+    "no_shift": false,
+    "weights": "none",
+    "sampler": "shuffle",
+    "loss": "ce",
+    "long_tail": 1.0,
+    "lt_seed": 42,
+    "temperature": "real",
+    "rnn": "lstm",
+    "ast_stride": 10,
+    "patchout": 0.0,
+    "freeze": 0,
+    "checkpoint": false,
+    "scratch": false,
+    "mmap": false,
+    "seed": 42,
+    "tag": "_real_s42"
+  },
+  "best_epoch": 25,
+  "epochs_run": 30,
+  "train_seconds": 2168.2,
+  "device": "mps",
+  "env": {
+    "torch": "2.5.0",
+    "platform": "macOS-26.5-arm64-arm-64bit"
+  },
+  "validation": {
+    "chunk": {
+      "accuracy": 0.5604395604395604,
+      "macro_precision": 0.5736955416830947,
+      "macro_recall": 0.5371337332540616,
+      "macro_f1": 0.5328985299337543,
+      "weighted_f1": 0.5526618875523817
+    },
+    "file": {
+      "accuracy": 0.6582278481012658,
+      "macro_precision": 0.6904100529100529,
+      "macro_recall": 0.6564814814814814,
+      "macro_f1": 0.6503066378066378,
+      "weighted_f1": 0.6488223098982594
+    },
+    "n_chunks": 819,
+    "n_files": 158
+  },
+  "test": {
+    "chunk": {
+      "accuracy": 0.5636363636363636,
+      "macro_precision": 0.5631909207880377,
+      "macro_recall": 0.544656245684387,
+      "macro_f1": 0.5344098450352357,
+      "weighted_f1": 0.5730016646983364
+    },
+    "file": {
+      "accuracy": 0.660377358490566,
+      "macro_precision": 0.6708994708994709,
+      "macro_recall": 0.6412037037037037,
+      "macro_f1": 0.6374098124098124,
+      "weighted_f1": 0.6571605543303657
+    },
+    "n_chunks": 825,
+    "n_files": 159
+  },
+  "test_subsets": {
+    "recordist_seen": {
+      "accuracy": 0.6879432624113475,
+      "macro_precision": 0.7047619047619047,
+      "macro_recall": 0.6814814814814816,
+      "macro_f1": 0.6636684303350969,
+      "weighted_f1": 0.6819977894445979,
+      "n_files": 141,
+      "n_species": 36
+    },
+    "recordist_unseen": {
+      "accuracy": 0.4444444444444444,
+      "macro_precision": 0.41025641025641024,
+      "macro_recall": 0.423076923076923,
+      "macro_f1": 0.3820512820512821,
+      "weighted_f1": 0.44814814814814813,
+      "n_files": 18,
+      "n_species": 13
+    }
+  }
+}

@@ -120,7 +120,7 @@ def main():
                label="seed ensemble on recordist-unseen files")
     ax.set_yticks(y, order["model"])
     ax.set_xlabel("test macro-F1 (file level)")
-    ax.set_xlim(0.4, 0.95)
+    ax.set_xlim(max(0.0, round(min(order["CI low"].min(), order["unseen macro-F1"].min()) - 0.05, 1)), 0.95)
     ax.legend(fontsize=7, loc="lower right")
     ax.set_title(f"Model comparison, {args.data}", fontsize=10)
     fig.tight_layout()

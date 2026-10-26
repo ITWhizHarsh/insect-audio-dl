@@ -35,6 +35,26 @@ evaluation, MLP / CNN / CRNN on a 12-species pilot, metadata analysis.
 - Experiment plans in `experiments/`; the MLP, CNN and CRNN run on the laptop,
   EfficientNetV2-S and AST on a free GPU via `notebooks/colab_gpu_training.ipynb`
 
+## Results (40-species benchmark, test set, file-level macro-F1)
+
+| Model | Params | Seeds | Macro-F1 (mean ± sd) | Recordist-unseen (seed ensemble) |
+|---|---|---|---|---|
+| EfficientNetV2-S (ImageNet) | 20.2 M | 1 | 0.847 | 0.791 |
+| AST (AudioSet, laptop setting) | 85.4 M | 3 | 0.831 ± 0.015 | 0.808 |
+| CNN (VGG-style, from scratch) | 1.19 M | 3 | 0.797 ± 0.013 | 0.734 |
+| CRNN (BiGRU variant) | 1.41 M | 1 | 0.718 | 0.655 |
+| CRNN (BiLSTM) | 1.61 M | 3 | 0.673 ± 0.013 | 0.659 |
+| MLP (146 handcrafted features) | 0.22 M | 5 | 0.609 ± 0.007 | 0.545 |
+| AST from random initialisation | 85.4 M | 1 | 0.409 | 0.299 |
+
+The two pretrained models are statistically tied (paired bootstrap p = 0.72) and both
+ahead of the CNN trained from scratch (EfficientNetV2-S p = 0.01, AST p = 0.10); every other
+gap between families is significant. Recorded temperature (FiLM conditioning, 36 Orthoptera
+species) adds no information over shuffled temperatures, and on a 10:1 long-tailed training
+set logit adjustment is the only imbalance strategy that helps (+0.051, p = 0.013).
+Full tables: `results/comparison_species40.md`, `results/metrics/model_comparison_species40_pairs.csv`,
+`results/metrics/longtail_species40_lt10.csv`, `results/metrics/temperature_orthotemp.csv`.
+
 ## Layout
 
 ```

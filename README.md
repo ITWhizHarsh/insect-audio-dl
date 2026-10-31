@@ -106,6 +106,6 @@ annotation CSV. Audio is never committed to this repository.
 
 ## Use of AI tools
 
-Code and report drafts were produced with the help of an LLM assistant
+Code was produced with the help of an LLM assistant
 (Claude, Anthropic) under the team's direction; every member reviewed and is
 responsible for the part they own. Details are given in the report.
